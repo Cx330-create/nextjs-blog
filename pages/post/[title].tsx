@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Container } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { getPostByTitle, getPosts } from '../../lib/api';
 import type { FC, ReactElement } from 'react';
@@ -21,7 +22,20 @@ const Post: FC<IProps> = ({ post: { title, contentMd } }): ReactElement => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Container maxWidth='lg'>
-        <ReactMarkdown remarkPlugins={[remarkGfm]} className='markdown-body'>
+        <ReactMarkdown
+          components={{
+            code({ inline, className, children }) {
+              const match = /language-(\w+)/.exec(className || '');
+              return !inline && match ? (
+                <SyntaxHighlighter children={String(children).replace(/\n$/, '')} language={match[1]} PreTag='div' />
+              ) : (
+                <code className={className}>{children}</code>
+              );
+            },
+          }}
+          remarkPlugins={[remarkGfm]}
+          className='markdown-body'
+        >
           {contentMd}
         </ReactMarkdown>
       </Container>

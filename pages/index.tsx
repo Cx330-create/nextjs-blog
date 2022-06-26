@@ -1,7 +1,8 @@
 /* @jsxImportSource @emotion/react */
 import Head from 'next/head';
 import Link from 'next/link';
-import { Container, Box, Avatar, List, ListItemButton, ListSubheader, ListItemText } from '@mui/material';
+import { Container, Box, Avatar, List, ListItemButton, ListItemText } from '@mui/material';
+import Typewriter from 'typewriter-effect';
 import { getPosts } from '../lib/api';
 import { IPosts } from '../types';
 import type { FC, ReactElement } from 'react';
@@ -32,7 +33,13 @@ const Home: FC<IProps> = ({ posts }): ReactElement => {
         }}
       >
         <Avatar alt='avatar' src='/images/7777zzz.jpg' sx={{ width: 80, height: 80 }} />
-        <span>Welcome,This is an unknown front-end space</span>
+        <Typewriter
+          options={{
+            strings: 'Welcome,This is an unknown front-end space!',
+            autoStart: true,
+            delay: 120,
+          }}
+        />
       </Box>
       <Container maxWidth='md'>
         <List
