@@ -21,7 +21,9 @@ const Post: FC<IProps> = ({ post: { title, contentMd } }): ReactElement => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Container maxWidth='lg'>
-        <ReactMarkdown children={contentMd} remarkPlugins={[remarkGfm]} className='markdown-body' />
+        <ReactMarkdown remarkPlugins={[remarkGfm]} className='markdown-body'>
+          {contentMd}
+        </ReactMarkdown>
       </Container>
     </>
   );
