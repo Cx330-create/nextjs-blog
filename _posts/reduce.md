@@ -1,3 +1,7 @@
+<description hidden>数组方法 reduce polyfill 实现及原理分析</description>
+
+# reduce polyfill
+
 ```js
 Array.prototype.selfReduce = function (callback, initValue) {
   // 有可能是这样调用Array.prototype.selfReduce.(call | apply)((null | undefined))
