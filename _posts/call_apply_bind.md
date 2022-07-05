@@ -2,7 +2,7 @@
 
 # call_apply_bind 原理分析及代码实现
 
-`call_apply_bind`的用法在这里就不多赘述了，不清楚的可以到 MDN 上看看
+`call_apply_bind`的用法在这里就不多赘述了
 
 `call_apply_bind`简单来说就是改变`this`的指向,call 和 apply 的实现就是运用了`函数作为某个对象的方法调用时，这时this就指 向这个对象的原理`，然后 call 和 apply 的区别就是 apply 第二个参数是一个数组，里面的元素是要传给调用的函数/方法的参数，而 call 则是把这个数组展开分成多个参数传入，bind 与 call、apply 的区别下面再细说
 
