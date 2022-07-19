@@ -43,10 +43,10 @@ Object.selfAssgin = function (target) {
 
           // 原型链上的属性和不可枚举属性不能被复制
           if (des.enumerable) {
-            var targetDescriptors = targetDescriptors[key] || {};
-            var targetProtoDescriptors = targetDescriptors[key] || {};
+            var targetDescriptor = targetDescriptors[key] || {};
+            var targetProtoDescriptor = targetProtoDescriptors[key] || {};
 
-            if (key in target && (targetDescriptors.writable === false || targetProtoDescriptors.writable === false)) {
+            if (key in target && (targetDescriptor.writable === false || targetProtoDescriptor.writable === false)) {
               // 如果赋值期间出错，例如如果属性不可写，则会抛出 TypeError(而且会检查原型上的同名属性)
               /*
                 var obj = {}
