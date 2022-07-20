@@ -4,7 +4,7 @@
 
 ```js
 /**
- * @description 并发限制调器
+ * @description 并发限制调度器
  * @author 7+
  * @param options 配置选项
  * @sub-param limit: 并发数量
@@ -17,18 +17,13 @@ function scheduler(options) {
   let { limit, values, pCtor, cb, cur = 0, pool = new Set() } = options;
 
   if (cur >= values.length) {
-    const SUCCESSEND = 'End of task(Successed)!';
-    const FAILEND = 'End of task(Failed)-';
-
-    return Promise.race(pool)
-      .then(() => SUCCESSEND)
-      .catch(e => FAILEND + e);
+    return Promise.race(pool);
   }
 
   const execute = v => {
-    const p = Promise.resolve().then(() => pCtor(v));
+    const p = Promise.resolve(pCtor(v));
     const clean = res => {
-      cb?.(res);
+      cur < values.length && cb?.(res);
       pool.delete(p);
     };
 
@@ -44,16 +39,17 @@ function scheduler(options) {
     execute(values[cur++]);
   }
 
-  return Promise.race(pool).then(() => scheduler({ ...options, limit: void 0, cur, pool }));
+  const final = () => scheduler({ ...options, limit: void 0, cur, pool });
+  return Promise.race(pool).then(final).catch(final);
 }
 
-const timeout = time => {
-  return new Promise(resolve => {
+const timeout = time =>
+  new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(time);
     }, time);
   });
-};
+
 const times = [2000, 1000, 900, 3000];
 
 scheduler({

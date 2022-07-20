@@ -230,7 +230,7 @@ class Promise {
         return Promise.resolve(callback()).then(() => value);
       },
       reason => {
-        return Promise.reject(callback()).then(() => {
+        return Promise.resolve(callback()).then(() => {
           throw reason;
         });
       }
